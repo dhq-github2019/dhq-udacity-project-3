@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: coworking
-        image: 127355097771.dkr.ecr.us-east-1.amazonaws.com/coworking-space:0.0.1
+        image: 127355097771.dkr.ecr.us-east-1.amazonaws.com/coworking-space:8
         imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
@@ -44,27 +44,10 @@ spec:
             port: 5153
           initialDelaySeconds: 5
           timeoutSeconds: 5
+        envFrom:
+        - configMapRef:
+            name: db-configmap
         env:
-        - name: DB_USERNAME
-          valueFrom:
-            configMapKeyRef:
-              name: db-configmap
-              key: DB_USER
-        - name: DB_NAME
-          valueFrom:
-            configMapKeyRef:
-              name: db-configmap
-              key: DB_NAME
-        - name: DB_HOST
-          valueFrom:
-            configMapKeyRef:
-              name: db-configmap
-              key: DB_HOST
-        - name: DB_PORT
-          valueFrom:
-            configMapKeyRef:
-              name: db-configmap
-              key: DB_PORT
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
